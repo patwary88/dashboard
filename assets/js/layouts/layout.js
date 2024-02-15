@@ -24,6 +24,25 @@ $(document).ready(function () {
        
     });
 
+
+        // for mobile device on ready function effect
+    if (isMobile()) {
+        //mobile device sidebar menu close
+        $("#sidebar .nav-link").on("click", function () {
+            
+            $('#sidebar').toggleClass('active');
+            
+        });
+        
+        //mobile device top navigation menu close
+        $('#top_nav a').on('click', function () {
+    
+                $('#navbarSupportedContent').collapse('hide');
+    
+        });
+        
+    }
+
     // $('#sidebar .nav-link').on('contextmenu', function(e) {
     //             e.preventDefault();
                 
@@ -151,47 +170,102 @@ $(document).ready(function () {
 //     });
 // });
 
-$(document).ready(function () {
-    // Function to fetch the content of the current page
-    function getCurrentPageContent() {
-        return $.ajax({
-            url: window.location.href,
-            type: 'GET',
-            dataType: 'html'
-        });
-    }
+// $(document).ready(function () {
+//     // Function to fetch the content of the current page
+//     function getCurrentPageContent() {
+//         return $.ajax({
+//             url: window.location.href,
+//             type: 'GET',
+//             dataType: 'html'
+//         });
+//     }
 
-    // Function to open a new tab with the same content
-    function openNewTabWithContent(content) {
+//     // Function to open a new tab with the same content
+//     function openNewTabWithContent(content) {
         
-        let newTab = window.open('', '_blank');
+//         let newTab = window.open('', '_blank');
 
-        console.log(newTab);
+//         console.log(newTab);
 
+//         newTab.document.write(content);
+//         newTab.document.title = 'Copy of ' + document.title;
+//     }
+
+//     // Context menu event handler for the navigation links
+//     $('nav .nav-item a').on('contextmenu', function (e) {
+//         // Prevent the default context menu
+//         e.preventDefault();
+
+//         // Fetch the content of the current page (if needed)
+//     let currentPageContent = document.documentElement.outerHTML;
+//     console.log(currentPageContent);
+//     // Open a new tab with the content of the current page
+//     openNewTabWithContent(currentPageContent);
+//         // Fetch the content of the current page
+//         getCurrentPageContent().done(function (currentPageContent) {
+//             // Open a new tab with the same content
+//             //alert($(this).attr('href'));
+//             openNewTabWithContent(currentPageContent);
+//         }).fail(function (error) {
+//             console.error('Error fetching current page content:', error);
+//         });
+//     });
+// });
+
+
+function openNewTabWithContent(content) {
+    // Open a new tab
+    let newTab = window.open(window.location.href, '_blank');
+    let currentURLWithPath = window.location.origin + window.location.pathname;
+   // alert(currentURLWithPath);
+    if (newTab) {
+        // Set the content of the new tab
         newTab.document.write(content);
+
+        // Optionally, update the title of the new tab
         newTab.document.title = 'Copy of ' + document.title;
+
+        // Function to load a script file into the new tab
+        function loadScript(url) {
+            let scriptElement = newTab.document.createElement('script');
+            scriptElement.src = url;
+            newTab.document.head.appendChild(scriptElement);
+        }
+
+        // Function to load a stylesheet file into the new tab
+        function loadStylesheet(url) {
+            let linkElement = newTab.document.createElement('link');
+            linkElement.rel = 'stylesheet';
+            linkElement.href = url;
+            newTab.document.head.appendChild(linkElement);
+        }
+        //alert(window.location.origin);
+        // Load script and stylesheet files into the new tab
+        loadScript(currentURLWithPath+'assets/js/layouts/layout.js');
+        loadScript(currentURLWithPath+'assets/js/layouts/form_design.js'); // Example script file
+        loadStylesheet(currentURLWithPath+'assets/css/layout.css'); // Example stylesheet file
+    } else {
+        console.error('Unable to open a new tab.');
     }
+}
 
-    // Context menu event handler for the navigation links
-    $('nav .nav-item a').on('contextmenu', function (e) {
-        // Prevent the default context menu
-        e.preventDefault();
+// Example usage:
+$('nav .nav-item a').on('contextmenu', function (e) {
+    // Prevent the default context menu
+    e.preventDefault();
 
-        // Fetch the content of the current page (if needed)
+    // Fetch the content of the current page (if needed)
     let currentPageContent = document.documentElement.outerHTML;
 
-    // Open a new tab with the content of the current page
+    // Open a new tab with the content of the current page and load script and stylesheet files
     openNewTabWithContent(currentPageContent);
-        // Fetch the content of the current page
-        // getCurrentPageContent().done(function (currentPageContent) {
-        //     // Open a new tab with the same content
-        //     //alert($(this).attr('href'));
-        //     openNewTabWithContent(currentPageContent);
-        // }).fail(function (error) {
-        //     console.error('Error fetching current page content:', error);
-        // });
-    });
+
+    if(this.getAttribute('href')!="#"){
+        $('#main_area').load(this.getAttribute('href'));
+
+    }
 });
+
 
 
 
@@ -259,24 +333,6 @@ $(document).ready(function () {
 
     // );  
 
-
-    // for mobile device on ready function effect
-    if (isMobile()) {
-        //mobile device sidebar menu close
-        $("#sidebar .nav-link").on("click", function () {
-            
-            $('#sidebar').toggleClass('active');
-            
-        });
-        
-        //mobile device top navigation menu close
-        $('#top_nav a').on('click', function () {
-    
-                $('#navbarSupportedContent').collapse('hide');
-    
-        });
-        
-    }
 
 
 
