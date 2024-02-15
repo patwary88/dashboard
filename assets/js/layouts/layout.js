@@ -213,62 +213,6 @@ $(document).ready(function () {
 // });
 
 
-function openNewTabWithContent(content) {
-    // Open a new tab
-    let newTab = window.open(window.location.href, '_blank');
-    let currentURLWithPath = window.location.origin + window.location.pathname;
-   // alert(currentURLWithPath);
-    if (newTab) {
-        // Set the content of the new tab
-        newTab.document.write(content);
-
-        // Optionally, update the title of the new tab
-        newTab.document.title = 'Copy of ' + document.title;
-
-        // Function to load a script file into the new tab
-        function loadScript(url) {
-            let scriptElement = newTab.document.createElement('script');
-            scriptElement.src = url;
-            newTab.document.head.appendChild(scriptElement);
-        }
-
-        // Function to load a stylesheet file into the new tab
-        function loadStylesheet(url) {
-            let linkElement = newTab.document.createElement('link');
-            linkElement.rel = 'stylesheet';
-            linkElement.href = url;
-            newTab.document.head.appendChild(linkElement);
-        }
-        //alert(window.location.origin);
-        // Load script and stylesheet files into the new tab
-        loadScript(currentURLWithPath+'assets/js/layouts/layout.js');
-        loadScript(currentURLWithPath+'assets/js/layouts/form_design.js'); // Example script file
-        loadStylesheet(currentURLWithPath+'assets/css/layout.css'); // Example stylesheet file
-    } else {
-        console.error('Unable to open a new tab.');
-    }
-}
-
-// Example usage:
-$('nav .nav-item a').on('contextmenu', function (e) {
-    // Prevent the default context menu
-    e.preventDefault();
-
-    // Fetch the content of the current page (if needed)
-    let currentPageContent = document.documentElement.outerHTML;
-
-    // Open a new tab with the content of the current page and load script and stylesheet files
-    openNewTabWithContent(currentPageContent);
-
-    if(this.getAttribute('href')!="#"){
-        $('#main_area').load(this.getAttribute('href'));
-
-    }
-});
-
-
-
-
     // Add a click event handler to anchor elements inside the navbar
     $('nav .nav-item').click(function (e) {
 
@@ -332,6 +276,122 @@ $('nav .nav-item a').on('contextmenu', function (e) {
     //     }
 
     // );  
+
+
+
+    function openNewTabWithContent(content) {
+    // Open a new tab
+    let newTab = window.open(window.location.href, '_blank');
+
+    //$('#main_area').load(this.getAttribute('href'));
+    let currentURLWithPath = window.location.origin + window.location.pathname;
+    //alert(this.getAttribute('href'));
+    if (newTab) {
+        // Set the content of the new tab
+        newTab.document.write('<!DOCTYPE html>');
+        newTab.document.write(content);
+
+        // Optionally, update the title of the new tab
+        newTab.document.title = 'Copy of ' + document.title;
+
+        // Function to load a script file into the new tab
+        function loadScript(url) {
+            let scriptElement = newTab.document.createElement('script');
+            scriptElement.src = url;
+            newTab.document.head.appendChild(scriptElement);
+        }
+
+        // Function to load a stylesheet file into the new tab
+        function loadStylesheet(url) {
+            let linkElement = newTab.document.createElement('link');
+            linkElement.rel = 'stylesheet';
+            linkElement.href = url;
+            newTab.document.head.appendChild(linkElement);
+        }
+        //alert(window.location.origin);
+        // Load script and stylesheet files into the new tab
+        loadScript(currentURLWithPath+'assets/js/layouts/layout.js');
+        loadScript(currentURLWithPath+'assets/js/layouts/form_design.js'); // Example script file
+        loadStylesheet(currentURLWithPath+'assets/css/layout.css'); // Example stylesheet file
+    } else {
+        console.error('Unable to open a new tab.');
+    }
+}
+
+// Example usage:
+$('nav .nav-item a').on('contextmenu', function (e) {
+    // Prevent the default context menu
+    e.preventDefault();
+    
+   // alert(this.getAttribute('href'));
+    // Fetch the content of the current page (if needed)
+    let currentPageContent = document.documentElement.outerHTML;
+
+
+    //console.log(document.documentElement.outerHTML);
+
+    // if(this.getAttribute('href')!="#"){
+    //     $('#main_area').load(this.getAttribute('href'));
+
+    // }
+    // Open a new tab with the content of the current page and load script and stylesheet files
+    openNewTabWithContent(currentPageContent);
+    $('#main_area').load(this.getAttribute('href'));
+    //alert(this.getAttribute('href'));
+    
+});
+
+// function openNewTabWithContent(content) {
+//     // Open a new tab
+//     let newTab = window.open('', '_blank');
+//     let currentURLWithPath = window.location.origin + window.location.pathname;
+//     if (newTab) {
+//         // Set the content of the new tab
+//         newTab.document.write('<!DOCTYPE html>'); // Adding DOCTYPE declaration
+//         newTab.document.write('<html>');
+//         newTab.document.write('<head>');
+//         newTab.document.write('<title>Copy of ' + document.title + '</title>'); // Update title
+//         // Function to load a script file into the new tab
+//         function loadScript(url) {
+//             let scriptElement = newTab.document.createElement('script');
+//             scriptElement.src = url;
+//             newTab.document.head.appendChild(scriptElement);
+//         }
+
+//         // Function to load a stylesheet file into the new tab
+//         function loadStylesheet(url) {
+//             let linkElement = newTab.document.createElement('link');
+//             linkElement.rel = 'stylesheet';
+//             linkElement.href = url;
+//             newTab.document.head.appendChild(linkElement);
+//         }
+//         newTab.document.write('</head>');
+//         newTab.document.write('<body>');
+//         // Adding content to body
+//         newTab.document.write(content);
+//         newTab.document.write('</body>');
+//         newTab.document.write('</html>');
+
+//         // Load script and stylesheet files into the new tab
+//         loadScript(currentURLWithPath + 'assets/js/layouts/layout.js');
+//         loadScript(currentURLWithPath + 'assets/js/layouts/form_design.js'); // Example script file
+//         loadStylesheet(currentURLWithPath + 'assets/css/layout.css'); // Example stylesheet file
+//     } else {
+//         console.error('Unable to open a new tab.');
+//     }
+// }
+
+// // Example usage:
+// $('nav .nav-item a').on('contextmenu', function (e) {
+//     // Prevent the default context menu
+//     e.preventDefault();
+
+//     // Fetch the content of the targeted div
+//     let targetDivContent = $(this.getAttribute('data-target-div')).html();
+
+//     // Open a new tab with the content of the targeted div and load script and stylesheet files
+//     openNewTabWithContent(targetDivContent);
+// });
 
 
 
